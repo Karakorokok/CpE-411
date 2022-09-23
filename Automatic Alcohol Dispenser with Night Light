@@ -1,0 +1,50 @@
+// Lastnames after the code means the code was written by those person/persons
+
+int led=5; // Villanueva
+int sensor=8; // Villanueva, Polutan
+int buzzer =10; // Biñas
+int relay = 4; // Capanas
+int ledPR = 3; // Capanas
+int light = 0; // Capanas
+
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600); // Polutan
+  pinMode (led,OUTPUT); // Villanueva
+  pinMode (sensor,INPUT); // Villanueva, Polutan
+  pinMode (buzzer, OUTPUT); // Biñas
+  pinMode (relay,OUTPUT); // Capanas
+  pinMode (ledPR,OUTPUT); // Capanas
+}
+
+void loop() {
+  
+  int statusIR = digitalRead(sensor); // Villanueva
+  light = analogRead(A0); // Capanas
+  
+  Serial.println(light); // Polutan
+  
+  //no detect state
+  if(statusIR==1) {
+    digitalWrite(led,LOW); // Villanueva
+    noTone(buzzer); // Biñas
+    digitalWrite(relay, LOW); // Capanas
+  }
+  
+  //detect state
+  else {
+    
+    digitalWrite(led,HIGH); // Villanueva
+    tone (buzzer,10); // Biñas
+    digitalWrite(relay,HIGH); // Capanas
+  }
+  
+  // This section was written by all memebers
+  if(light > 50){ 
+    digitalWrite(ledPR, LOW); 
+  }
+  else{
+    digitalWrite(ledPR, HIGH); 
+  }
+}
